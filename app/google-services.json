@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "354241747822",
+    "firebase_url": "https://garbageremover.firebaseio.com",
+    "project_id": "garbageremover",
+    "storage_bucket": "garbageremover.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354241747822:android:252eb284aac18efd",
+        "android_client_info": {
+          "package_name": "com.example.garbageremover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354241747822-ve57e6aopbqpq5v0uca8nsbo1br25rv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.garbageremover",
+            "certificate_hash": "bd3baf8cc611a3edb6bd9f971718209361f4a808"
+          }
+        },
+        {
+          "client_id": "354241747822-62v2ub15t4s795fnkvlhbun8dtnjn97c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBla7o5QFbPt0inf3QLknypR0YiSw3SyKw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354241747822-62v2ub15t4s795fnkvlhbun8dtnjn97c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
