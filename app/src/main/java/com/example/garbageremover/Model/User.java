@@ -1,17 +1,15 @@
-package com.example.garbageremover.POJO;
+package com.example.garbageremover.Model;
 
 public class User {
     public String email;
-    public String password;
     public String name;
     public String surname;
     public String phoneNumber;
     public User(){
 
     }
-    public User(String email, String password, String name, String surname, String phoneNumber) {
+    public User(String email, String name, String surname, String phoneNumber) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
@@ -23,14 +21,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {

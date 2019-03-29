@@ -5,16 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.garbageremover.POJO.User;
+import com.example.garbageremover.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     EditText mEmail , mPassword;
     private FirebaseAuth mAuth;
-    private final int SIGN_UP_REQUEST = 0;
+    private final int SIGN_UP_REQUEST = 0;;
     private User userInfo;
     public boolean exist = true ;
-
+    public boolean UserWithNewPass = false ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
             userInfo = new User();
             userInfo.email = email;
-            userInfo.password = password;
             userInfo.name = data.getStringExtra("name");
             userInfo.surname = data.getStringExtra("surname");
             userInfo.phoneNumber = phoneNumber;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void signInUser() {
         String email = mEmail.getText().toString().trim();
-        String password = mPassword.getText().toString().trim();
+        final String password = mPassword.getText().toString().trim();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

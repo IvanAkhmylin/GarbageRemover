@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.garbageremover.POJO.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +31,7 @@ public class UserForgotPassword extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(UserForgotPassword.this, "Check your email adress for reset password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserForgotPassword.this, "Check your email address for reset password", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserForgotPassword.this,MainActivity.class));
                     } else {
                         Toast.makeText(UserForgotPassword.this, "ERROR", Toast.LENGTH_SHORT).show();
