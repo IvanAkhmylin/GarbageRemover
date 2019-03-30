@@ -1,13 +1,21 @@
 package com.example.garbageremover;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.garbageremover.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,9 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserActivity extends AppCompatActivity {
+    private final int CHANGE_IMAGE_REQUEST = 3;
     FirebaseAuth mAuth ;
     FirebaseUser mUser;
     ImageView user_image;
@@ -36,6 +49,13 @@ public class UserActivity extends AppCompatActivity {
         city = findViewById(R.id.profile_city);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        user_image = findViewById(R.id.image_profile);
+        user_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creteDialogForChoose();
+            }
+        });
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref = database.child("Users").child(mAuth.getCurrentUser().getUid());
         ref.addValueEventListener(new ValueEventListener() {
@@ -63,6 +83,37 @@ public class UserActivity extends AppCompatActivity {
 
 
 
+    private void creteDialogForChoose() {
+        final String[] items = {"Show Image" , "Change Image" , "Edit Profile"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        Drawable drawable = user_image.getDrawable();
+                        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+                        byte[] bytes = baos.toByteArray();
+
+                        Intent intent  = new Intent(UserActivity.this, ShowImageActivity.class);
+                        intent.putExtra("image",bytes);
+                        intent.putExtra("user",user_name_surname.getText().toString());
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(Intent.ACTION_PICK);
+                        intent1.setType("image/*");
+                        startActivityForResult(intent1,CHANGE_IMAGE_REQUEST);
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
 
     public void signOut(View view) {
         mAuth.getInstance().signOut();
@@ -71,5 +122,24 @@ public class UserActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHANGE_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            try {
+                InputStream is = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                user_image.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+
+        }
     }
 }
