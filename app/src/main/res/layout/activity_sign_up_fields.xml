@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:id="@+id/password"
         android:hint="password"
@@ -35,6 +36,12 @@
         android:layout_marginTop="10dp"
         android:id="@+id/phoneNumber"
         android:hint="phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/city"
+        android:hint="city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button

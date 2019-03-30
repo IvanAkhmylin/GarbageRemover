@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     EditText mEmail , mPassword;
     private FirebaseAuth mAuth;
-    private final int SIGN_UP_REQUEST = 0;;
+    private final int SIGN_UP_REQUEST = 0;
     private User userInfo;
     public boolean exist = true ;
     public boolean UserWithNewPass = false ;
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             userInfo = new User();
             userInfo.email = email;
             userInfo.name = data.getStringExtra("name");
+            userInfo.city =  data.getStringExtra("city");
             userInfo.surname = data.getStringExtra("surname");
             userInfo.phoneNumber = phoneNumber;
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,  task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
