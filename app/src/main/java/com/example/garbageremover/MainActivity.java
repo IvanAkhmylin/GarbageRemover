@@ -1,6 +1,7 @@
 package com.example.garbageremover;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.garbageremover.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
@@ -24,20 +27,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
     EditText mEmail , mPassword;
     private FirebaseAuth mAuth;
     private final int SIGN_UP_REQUEST = 0;
     private User userInfo;
+    public FirebaseUser currentUser;
     public boolean exist = true ;
-    public boolean UserWithNewPass = false ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
         mEmail = findViewById(R.id.edit_email);
         mPassword = findViewById(R.id.edit_password);
@@ -47,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
 
     }
 
@@ -93,9 +103,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            if (mAuth.getCurrentUser().isEmailVerified()){
+                            currentUser = mAuth.getCurrentUser();
+                            if (currentUser.isEmailVerified()){
                                 Toast.makeText(MainActivity.this, "Authentication success. ", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(MainActivity.this,UserActivity.class));
+                                Intent intent = new Intent(MainActivity.this,UserActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }else{
                                 Toast.makeText(MainActivity.this, "Authentication failed. Please verify your email address", Toast.LENGTH_SHORT).show();
                             }
@@ -116,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            currentUser = mAuth.getCurrentUser();
                             mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -127,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                            if (user != null){
-                                String mUid = user.getUid();
+                            if (currentUser != null){
+                                String mUid = currentUser .getUid();
                                 FirebaseDatabase.getInstance().getReference("Users")
                                         .child(mUid)
                                         .setValue(userInfo);
@@ -185,7 +199,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     public void btn_ForgotPass(View view) {
+
         Intent intent = new Intent(this,UserForgotPassword.class);
         startActivity(intent);
     }
