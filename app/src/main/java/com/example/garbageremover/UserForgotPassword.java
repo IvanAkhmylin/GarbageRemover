@@ -32,7 +32,7 @@ public class UserForgotPassword extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(UserForgotPassword.this, "Check your email address for reset password", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(UserForgotPassword.this,MainActivity.class));
+                        startActivity(new Intent(UserForgotPassword.this, LoginSignUpActivity.class));
                     } else {
                         Toast.makeText(UserForgotPassword.this, "ERROR", Toast.LENGTH_SHORT).show();
                     }

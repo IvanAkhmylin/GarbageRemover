@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.garbageremover">
-
+    <uses-permission android:name="android.permission.CAMERA"
+        android:required="true"  />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".CheckCurrentUser"
         android:allowBackup="true"
@@ -12,9 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ShowImageActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".CreateRequestForClean"></activity>
+        <activity
+            android:name=".ActivityWithCleanRequest"
+            android:label="@string/title_activity_with_clean_request" />
+        <activity
+            android:name=".ShowImageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserForgotPassword"
             android:screenOrientation="portrait" />
@@ -25,7 +32,7 @@
             android:name=".SignUpFields"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginSignUpActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -6,16 +6,18 @@ public class User {
     public String surname;
     public String phoneNumber;
     public String city;
+    public int money;
     public User(){
 
     }
 
-    public User(String email, String name, String surname, String phoneNumber, String city) {
+    public User(String email, String name, String surname, String phoneNumber, String city,int money) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.city = city;
+        this.money = money;
     }
 
     public String getEmail() {
@@ -56,5 +58,13 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 }
