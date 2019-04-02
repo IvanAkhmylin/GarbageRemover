@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateRequestForClean"
+    android:orientation="vertical">
+    <ImageView
+        android:src="@drawable/ic_photo_camera_black_24dp"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+    <Button
+        android:onClick="crete_Image"
+        android:id="@+id/btn_make_image"
+        android:layout_below="@+id/image"
+        android:text="Make Photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:lines="4"
+        android:maxLines="4"
+        android:layout_below="@+id/btn_make_image"
+        android:id="@+id/description_create_request"
+        android:hint="@string/description_create_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:inputType="number"
+        android:id="@+id/payment_money"
+        android:layout_below="@id/description_create_request"
+        android:hint="How much money you give ?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:padding="12dp"
+        android:text="your money"
+        android:layout_below="@id/description_create_request"
+        android:layout_toEndOf="@+id/payment_money"
+        android:id="@+id/user_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:onClick="btnCreateRequest"
+        android:text="create request"
+        android:layout_below="@id/user_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

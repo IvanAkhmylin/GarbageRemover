@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Garbage Remover</string>
+    <string name="title_activity_with_clean_request">ActivityWithCleanRequest</string>
+    <string name="description_create_request">Discription</string>
 </resources>

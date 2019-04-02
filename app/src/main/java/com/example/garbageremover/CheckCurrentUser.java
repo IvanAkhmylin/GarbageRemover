@@ -12,11 +12,11 @@ public class CheckCurrentUser extends Application {
         super.onCreate();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
-
+        // проверка , если юзер уже логинился , то открывает его профиль если же нет то , открывает активити для логина .
         if (mUser != null && mUser.isEmailVerified()){
             startActivity(new Intent(CheckCurrentUser.this, UserActivity.class));
         }else{
-            startActivity(new Intent(CheckCurrentUser.this, MainActivity.class));
+            startActivity(new Intent(CheckCurrentUser.this, LoginSignUpActivity.class));
         }
     }
 }

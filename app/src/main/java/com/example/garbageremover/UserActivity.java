@@ -1,7 +1,6 @@
 package com.example.garbageremover;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +36,6 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserActivity extends AppCompatActivity implements  EditProfileDiaolog.DialogListener{
     private final int CHANGE_IMAGE_REQUEST = 3;
@@ -93,6 +89,8 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
     }
 
     private void addProfileImageToTheView() {
+        // получаем из Firebase изображение и выводим в ImageView
+                // если изображение есть то выводит фото ззагруженное пользователем если нет то берет дефолтное изображение
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("UsersProfileImages");
         storageReference.child(mUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -122,13 +120,14 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
                         byte[] bytes = baos.toByteArray();
-
+                        // открываем изображение в новом активити
                         Intent intent  = new Intent(UserActivity.this, ShowImageActivity.class);
                         intent.putExtra("image",bytes);
                         intent.putExtra("user",user_name_surname.getText().toString());
                         startActivity(intent);
                         break;
                     case 1:
+                        // код получения изображения из галлеереи
                         Intent intent1 = new Intent(Intent.ACTION_PICK);
                         intent1.setType("image/*");
                         startActivityForResult(intent1,CHANGE_IMAGE_REQUEST);
@@ -143,6 +142,7 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
     }
 
     private void editProfileDialog() {
+        // отправляе текующие даннные пользователя для изменения (эти данные записываются в ЕditText ы
         String[] name_surname = user_name_surname.getText().toString().split(" ");
         EditProfileDiaolog editDialog = new EditProfileDiaolog();
         editDialog.Constructor(name_surname[0],name_surname[1],city.getText().toString());
@@ -152,7 +152,7 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
 
     public void signOut(View view) {
         mAuth.getInstance().signOut();
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, LoginSignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -165,6 +165,7 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
         if (requestCode == CHANGE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             try {
+                // получаем фото из галереи
                 uploadUserProfileImage(mAuth.getCurrentUser(),imageUri);
                 InputStream is = getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(is);
@@ -179,7 +180,7 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
         }
     }
     public void uploadUserProfileImage(FirebaseUser user, Uri uri){
-
+        // отправляем в Firebase изображение которое выбрал пользователь
         if (user != null){
             String mUid = user.getUid();
             Uri file = uri;
@@ -210,6 +211,7 @@ public class UserActivity extends AppCompatActivity implements  EditProfileDiaol
 
     @Override
     public void saveData(String name, String surname, String city) {
+        // записываем данные которые изменил пользователь , в FB
         if (mUser != null){
             FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid()).child("name").setValue(name);
             FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid()).child("surname").setValue(surname);
