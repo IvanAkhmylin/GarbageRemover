@@ -5,10 +5,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.garbageremover.Fragments.UserProfileFragment;
 import com.example.garbageremover.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginSignUpActivity extends AppCompatActivity {
-    EditText mEmail , mPassword;
+    private EditText mEmail , mPassword;
+    private TextView forgotPass;
     private FirebaseAuth mAuth;
     private final int SIGN_UP_REQUEST = 0;
     private User userInfo;
@@ -35,11 +42,49 @@ public class LoginSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.auth_activity);
+        forgotPass = findViewById(R.id.forgotPass);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginSignUpActivity.this,UserForgotPassword.class));
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
         mEmail = findViewById(R.id.edit_email);
         mPassword = findViewById(R.id.edit_password);
+        mEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validate();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validate();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -51,17 +96,35 @@ public class LoginSignUpActivity extends AppCompatActivity {
     }
 
     public void btn_SignIn(View view) {
-        signInUser();
+        if (validate()){
+            signInUser();
+        }
 
     }
 
-
-
     public void btn_SignUp(View view) {
-        Intent intent = new Intent(this,SignUpFields.class); // запуск активити для ррегистрации
+        Intent intent = new Intent(this,SignUpFields.class);
         startActivityForResult(intent,SIGN_UP_REQUEST);
     }
 
+    public boolean validate(){
+        boolean valid = true;
+        if (mEmail.getText().toString().trim().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(mEmail.getText().toString()).matches()){
+            mEmail.setError("Enter valid email address");
+            valid = false;
+        }else{
+            mEmail.setError(null);
+        }
+
+        if (mPassword.getText().toString().trim().isEmpty() || mPassword.getText().toString().trim().length() < 5 ){
+            mPassword.setError("Password must be 5 characters or more");
+            valid = false ;
+        }else{
+            mPassword.setError(null);
+        }
+
+        return valid;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -92,12 +155,12 @@ public class LoginSignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {   // если все гуд то переходи в UserActivity.class
+                        if (task.isSuccessful()) {   // если все гуд то переходи в UserProfileFragment.class
                             // Sign in success, update UI with the signed-in user's information
                             currentUser = mAuth.getCurrentUser();
                             if (currentUser.isEmailVerified()){
                                 Toast.makeText(LoginSignUpActivity.this, "Authentication success. ", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginSignUpActivity.this,UserActivity.class);
+                                Intent intent = new Intent(LoginSignUpActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -190,11 +253,4 @@ public class LoginSignUpActivity extends AppCompatActivity {
         });
     }
 
-
-
-    public void btn_ForgotPass(View view){
-        // переход к UserForgotPassword активити
-        Intent intent = new Intent(this,UserForgotPassword.class);
-        startActivity(intent);
-    }
 }

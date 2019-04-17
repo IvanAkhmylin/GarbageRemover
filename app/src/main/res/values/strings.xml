@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">Garbage Remover</string>
     <string name="title_activity_with_clean_request">ActivityWithCleanRequest</string>
-    <string name="description_create_request">Discription</string>
+    <string name="description_create_request">Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="forgot_password">forgot password ?</string>
+    <string name="sign_up">sign up</string>
+    <string name="sign_in">sign in</string>
+    <string name="password">password</string>
+    <string name="email">email</string>
+    <string name="name">name</string>
+    <string name="surname">surname</string>
+    <string name="phonenumber">phone number</string>
+    <string name="city">city</string>
+    <string name="registration">registration</string>
+    <string name="send_email">send email</string>
+    <string name="please_enter_the_email_you_provided_during_registration">Please enter the email you provided during registration</string>
 </resources>

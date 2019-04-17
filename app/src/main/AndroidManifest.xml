@@ -2,10 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.garbageremover">
-    <uses-permission android:name="android.permission.CAMERA"
-        android:required="true"  />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".CheckCurrentUser"
         android:allowBackup="true"
@@ -15,23 +23,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateRequestForClean"></activity>
-        <activity
-            android:name=".ActivityWithCleanRequest"
-            android:label="@string/title_activity_with_clean_request" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".CreateRequestForClean"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity
             android:name=".ShowImageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".UserForgotPassword"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".UserActivity"
-            android:screenOrientation="portrait" />
-        <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".SignUpFields"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".LoginSignUpActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,6 +52,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.garbageremover.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
     </application>
 
 </manifest>

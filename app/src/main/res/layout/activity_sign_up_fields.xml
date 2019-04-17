@@ -7,47 +7,122 @@
     tools:context=".SignUpFields"
     android:orientation="vertical"
     android:padding="8dp">
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/email"
-        android:hint="email"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
-        android:id="@+id/password"
-        android:hint="password"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionNext"
+            android:layout_marginTop="10dp"
+            android:id="@+id/email"
+            android:hint="@string/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/name"
-        android:hint="name"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:layout_marginTop="10dp"
+            android:id="@+id/password"
+            android:hint="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/surname"
-        android:hint="surname"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="text"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionNext"
+            android:layout_marginTop="10dp"
+            android:id="@+id/name"
+            android:hint="@string/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/phoneNumber"
-        android:hint="phoneNumber"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="text"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionNext"
+            android:layout_marginTop="10dp"
+            android:id="@+id/surname"
+            android:hint="@string/surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:id="@+id/city"
-        android:hint="city"
+        android:layout_margin="10dp"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="phone"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionNext"
+            android:layout_marginTop="10dp"
+            android:id="@+id/phoneNumber"
+            android:hint="@string/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_margin="10dp"
+        app:hintTextAppearance="@style/HintTextInputLayout"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="text"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_style"
+            android:imeOptions="actionDone"
+            android:layout_marginTop="10dp"
+            android:id="@+id/city"
+            android:hint="@string/city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
     <Button
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/button_text_size"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_signin_style"
         android:onClick="btn_Registration"
-        android:text="REGISTRATIOn"
-        android:layout_width="wrap_content"
+        android:text="@string/registration"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

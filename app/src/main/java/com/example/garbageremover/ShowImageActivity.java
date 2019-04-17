@@ -17,6 +17,11 @@ public class ShowImageActivity extends AppCompatActivity {
     ImageView image;
     TextView user_Name;
     ImageButton btn_back;
+    private static Bitmap mBitmap;
+    public static void getImage(Bitmap bitmap){
+        mBitmap = bitmap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +30,7 @@ public class ShowImageActivity extends AppCompatActivity {
         user_Name = findViewById(R.id.user_name);
 
         Intent intent = getIntent();
-        byte[] bytes = intent.getByteArrayExtra("image");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(mBitmap);
         user_Name.setText(intent.getStringExtra("user"));
         btn_back = findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -37,4 +40,7 @@ public class ShowImageActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }
