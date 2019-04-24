@@ -22,12 +22,18 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Context context;
     ArrayList<RequestModel> requests;
-
+    onItemClickListener mListener;
     public RecyclerViewAdapter(Context context , ArrayList<RequestModel> requests){
         this.context = context;
         this.requests = requests;
     }
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
 
+    public void setOnItemClickListener(onItemClickListener listener){
+        mListener = listener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -41,10 +47,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .apply(new RequestOptions()
                 .override(1500,2000))
                 .into(viewHolder.recyclerImage);
-//        Picasso.get().load(Uri.parse(requests.get(i).getCustomerImageUri()))
-//                .error(R.drawable.ic_photo_camera_black_24dp)
-//                .resize(1500,2000)
-//                .into(viewHolder.recyclerImage);
         viewHolder.recyclerCustomer.setText(requests.get(i).getCustomerName());
         viewHolder.recyclerPrice.setText(requests.get(i).getPayment());
         viewHolder.recyclerDescription.setText(requests.get(i).getDescription());
@@ -56,17 +58,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return requests.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView recyclerImage ;
         TextView recyclerCustomer,recyclerPrice,recyclerDescription,recyclerAddress;
+
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
             recyclerImage = itemView.findViewById(R.id.recyclerImage);
             recyclerCustomer = itemView.findViewById(R.id.recyclerCustomer);
             recyclerPrice = itemView.findViewById(R.id.recyclerPrice);
             recyclerDescription = itemView.findViewById(R.id.recyclerDescription);
             recyclerAddress = itemView.findViewById(R.id.recyclerAddress);
         }
+
+
+
     }
 }
 

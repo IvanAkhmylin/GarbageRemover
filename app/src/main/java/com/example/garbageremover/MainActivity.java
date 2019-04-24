@@ -7,9 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.garbageremover.Adapter.FragmentViewPagerAdapter;
 import com.example.garbageremover.Fragments.FragmentWithCleanRequest;
+import com.example.garbageremover.Fragments.FragmentWithCompleteRequests;
 import com.example.garbageremover.Fragments.SearchUsersFragment;
 import com.example.garbageremover.Fragments.UserProfileFragment;
 
@@ -31,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int i) {
-                    bottomNavigationView.getMenu().getItem(i).setChecked(true);
-
+                bottomNavigationView.getMenu().getItem(i).setChecked(true);
             }
 
             @Override
@@ -45,12 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getSupportFragmentManager());
-        FragmentWithCleanRequest fragmentWithCleanRequest = new FragmentWithCleanRequest();
         SearchUsersFragment searchUsersFragment = new SearchUsersFragment();
         UserProfileFragment userProfileFragment = new UserProfileFragment();
-        adapter.addFragments(userProfileFragment);
-        adapter.addFragments(fragmentWithCleanRequest);
-        adapter.addFragments(searchUsersFragment);
+        adapter.addFragments(userProfileFragment,"A");
+        adapter.addFragments(new FragmentWithCleanRequest(),"requests");
+        adapter.addFragments(searchUsersFragment,"C");
         viewPager.setCurrentItem(0);
         viewPager.setAdapter(adapter);
     }

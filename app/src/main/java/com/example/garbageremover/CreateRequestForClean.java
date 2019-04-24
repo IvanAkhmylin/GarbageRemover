@@ -59,9 +59,9 @@ import static android.location.Location.convert;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class CreateRequestForClean extends AppCompatActivity {
-    private final int TAKE_CAMERA_CAPTURE = 3;
-    private final int GET_IMAGE_GALLERY = 4;
-    private final int REQUEST_PERMISSION = 5;
+    public static final int TAKE_CAMERA_CAPTURE = 3;
+    public static final int GET_IMAGE_GALLERY = 4;
+    public static final int REQUEST_PERMISSION = 5;
     private EditText description , userPayment;
     private FusedLocationProviderClient client;
     private TextView userMoney;
@@ -172,7 +172,7 @@ public class CreateRequestForClean extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 data = dataSnapshot.getValue(User.class);
-                userMoney.setText(String.valueOf(data.getMoney()) + " Сом");
+                userMoney.setText(String.valueOf(data.getMoney()));
                 Toast.makeText(CreateRequestForClean.this, String.valueOf(data.getMoney()), Toast.LENGTH_SHORT).show();
 
             }
@@ -186,7 +186,7 @@ public class CreateRequestForClean extends AppCompatActivity {
 
 
 
-    private File createPhotoFile() {
+    public static File createPhotoFile() {
         String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File storageDirectory = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = null;
@@ -307,27 +307,21 @@ public class CreateRequestForClean extends AppCompatActivity {
             }else if ((Integer.parseInt(userMoney.getText().toString()) - (Integer.parseInt(userPayment.getText().toString()))) < 0) {
                             Toast.makeText(this, "Not enough money", Toast.LENGTH_SHORT).show();
                         }else{
+                            String address = getAddressFromLatLon(Latitude,Longitude);
+                             address = address.replace("Киргизия","Кыргызстан");
                             requestModel = new RequestModel();
-                            requestModel.setAddress(getAddressFromLatLon(Latitude,Longitude));
+                            requestModel.setAddress(address);
+                            requestModel.setRequestStatus("before");
                             requestModel.setCustomerName(data.getName() + " " + data.getSurname());
                             requestModel.setDescription(description.getText().toString());
                             requestModel.setLatitude(stringLatitude);
+                            requestModel.setCustomerID(mUser.getUid());
                             requestModel.setLongitude(stringLongitude);
                             requestModel.setPayment(userPayment.getText().toString());
-                            String mUid = mUser.getUid(); //  в SignUpFields.class
                             stringLatitude = stringLatitude.replace(".",",");
                             stringLongitude = stringLongitude.replace(".",",");
                             uploadImageToFirebase(requestUri);
-
-
-//        String stringLatitude = String.valueOf(Latitude);
-//        String stringLongitude = String.valueOf(Longitude);
-//        String uri = String.format(Locale.ENGLISH,"geo:0,0?q="+stringLatitude+" "+stringLongitude);
-//        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(uri));
-//        startActivity(intent);
-
             }
-
     }
     private void getDownloadUri(){
         StorageReference reference = FirebaseStorage.getInstance().getReference("RequestImages");
@@ -377,10 +371,15 @@ public class CreateRequestForClean extends AppCompatActivity {
 
 
     public void getImageGallery() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_PICK);
-        intent.setType("image/jpeg");
-        startActivityForResult(Intent.createChooser(intent,"Select Picture") , GET_IMAGE_GALLERY);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION);
+        }else{
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_PICK);
+            intent.setType("image/jpeg");
+            startActivityForResult(Intent.createChooser(intent,"Select Picture") , GET_IMAGE_GALLERY);
+        }
+
     }
 }
 

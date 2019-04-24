@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FragmentViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
+    private List<String> mFragmentFlag = new ArrayList<>();
     public FragmentViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -22,8 +23,13 @@ public class FragmentViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mFragmentList.size();
     }
-
-    public void addFragments(Fragment fragment){
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentFlag.get(position);
+    }
+    public void addFragments(Fragment fragment,String name){
         mFragmentList.add(fragment);
+        mFragmentFlag.add(name);
+
     }
 }

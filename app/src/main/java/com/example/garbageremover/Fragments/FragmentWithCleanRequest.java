@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.garbageremover.Adapter.RecyclerViewAdapter;
 import com.example.garbageremover.CreateRequestForClean;
+import com.example.garbageremover.DetailOfRequest;
 import com.example.garbageremover.Model.RequestModel;
 
 import com.example.garbageremover.R;
@@ -29,8 +30,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentWithCleanRequest extends Fragment {
+public class FragmentWithCleanRequest extends Fragment implements RecyclerViewAdapter.onItemClickListener {
     private final int ADD_CLEAN_REQUEST = 6;
+    public static final String REQUEST_IMAGE = "image";
+    public static final String REQUEST_CUSTOMER_NAME = "name";
+    public static final String REQUEST_DESCRIPTION = "description";
+    public static final String REQUEST_ADDRESS= "address";
+    public static final String REQUEST_CUSTOMER_ID= "CustomerID";
+    public static final String REQUEST_PAYMENT = "payment";
+    public static final String REQUEST_LATITUDE= "latitude";
+    public static final String REQUEST_LONGITUDE  = "longitude";
+
     FloatingActionButton fab ;
     DatabaseReference reference ;
     RecyclerView recyclerView;
@@ -101,6 +111,7 @@ public class FragmentWithCleanRequest extends Fragment {
                         adapter = new RecyclerViewAdapter(getActivity(),requests);
                     }
                     recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(FragmentWithCleanRequest.this);
                 }else{
                     listIsEmpty.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -112,6 +123,22 @@ public class FragmentWithCleanRequest extends Fragment {
                 Toast.makeText(getActivity(), "Something wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getActivity(), DetailOfRequest.class);
+        RequestModel model = requests.get(position);
+        intent.putExtra(REQUEST_IMAGE,model.getCustomerImageUri());
+        intent.putExtra(REQUEST_CUSTOMER_ID,model.getCustomerID());
+        intent.putExtra(REQUEST_CUSTOMER_NAME,model.getCustomerName());
+        intent.putExtra(REQUEST_ADDRESS,model.getAddress());
+        intent.putExtra(REQUEST_PAYMENT,model.getPayment());
+        intent.putExtra(REQUEST_DESCRIPTION,model.getDescription());
+        intent.putExtra(REQUEST_LATITUDE,model.getLatitude());
+        intent.putExtra(REQUEST_LONGITUDE,model.getLongitude());
+        startActivity(intent);
+
     }
 }
 

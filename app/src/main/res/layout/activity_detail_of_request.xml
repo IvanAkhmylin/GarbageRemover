@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:padding="8dp"
+    tools:context=".DetailOfRequest">
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_photo_camera_black_24dp"
+        android:id="@+id/requestImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <Button
+        android:id="@+id/getRequestLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewPager"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_signin_style"
+        android:text="show place on the map "
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/button_text_size" />
+    <android.widget.RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/customer"
+            android:text="Customer: "
+            android:textSize="@dimen/text_size"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/customerID"
+            android:textSize="@dimen/text_size"
+            android:layout_toEndOf="@+id/customer"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:text="@string/description_create_request"
+            android:id="@+id/description"
+            android:textSize="@dimen/text_size"
+            android:layout_below="@+id/customerID"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="31dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/descriptionID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customerID"
+            android:layout_marginEnd="20dp"
+            android:layout_toEndOf="@id/description"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/price"
+            android:id="@+id/price"
+            android:textSize="@dimen/text_size"
+            android:layout_below="@+id/descriptionID"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/priceID"
+            android:textSize="@dimen/text_size"
+
+            android:layout_below="@id/descriptionID"
+            android:layout_toEndOf="@id/price"
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="55dp"
+            android:text="@string/address"
+            android:id="@+id/address"
+            android:textSize="@dimen/text_size"
+            android:layout_below="@+id/priceID"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/addressID"
+            android:textSize="@dimen/text_size"
+
+            android:layout_below="@id/priceID"
+            android:layout_toEndOf="@id/address"
+            android:textColor="@android:color/black"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.widget.RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:id="@+id/deleteRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPager"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_signin_style"
+            android:text="@string/delete_request"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+        <Button
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:id="@+id/performRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPager"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_signin_style"
+            android:text="@string/perform_request"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+        <Button
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:id="@+id/show_performRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPager"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_signin_style"
+            android:text="Show perform  request"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
+</ScrollView>

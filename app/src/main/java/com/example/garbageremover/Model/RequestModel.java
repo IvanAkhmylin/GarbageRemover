@@ -3,23 +3,35 @@ package com.example.garbageremover.Model;
 public class RequestModel {
     private String CustomerImageUri;
     private String CustomerName;
+    private String CustomerID;
     private String Description;
     private String Address ;
     private String Payment ;
     private String Latitude;
     private String Longitude;
+    private String RequestStatus;
     public RequestModel(){
 
     }
 
-    public RequestModel(String customerImageUri, String customerName, String description, String address, String payment, String latitude, String longitude) {
+    public RequestModel(String customerImageUri, String customerName, String customerID, String description, String address, String payment, String latitude, String longitude, String requestStatus) {
         CustomerImageUri = customerImageUri;
         CustomerName = customerName;
+        CustomerID = customerID;
         Description = description;
         Address = address;
         Payment = payment;
         Latitude = latitude;
         Longitude = longitude;
+        RequestStatus = requestStatus;
+    }
+
+    public String getRequestStatus() {
+        return RequestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        RequestStatus = requestStatus;
     }
 
     public String getCustomerImageUri() {
@@ -36,6 +48,14 @@ public class RequestModel {
 
     public void setCustomerName(String customerName) {
         CustomerName = customerName;
+    }
+
+    public String getCustomerID() {
+        return CustomerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        CustomerID = customerID;
     }
 
     public String getDescription() {

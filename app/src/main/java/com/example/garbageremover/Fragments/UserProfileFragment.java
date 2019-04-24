@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.garbageremover.Adapter.EditProfileDialog;
 import com.example.garbageremover.LoginSignUpActivity;
 import com.example.garbageremover.Model.User;
@@ -124,7 +126,11 @@ public class UserProfileFragment extends Fragment {
         storageReference.child(mUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(user_image);
+                Glide.with(getActivity()).load(uri)
+                        .placeholder(R.drawable.ic_photo_camera_black_24dp)
+                        .apply(new RequestOptions()
+                        .override(1500,2000))
+                        .into(user_image);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

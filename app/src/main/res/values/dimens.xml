@@ -2,4 +2,5 @@
 <resources>
     <dimen name="button_text_size">15sp</dimen>
     <dimen name="hint_size" >17sp</dimen>
+    <dimen name="text_size">18sp</dimen>
 </resources>
